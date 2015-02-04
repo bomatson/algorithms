@@ -33,6 +33,10 @@ class WeightedQuickUnion
       @sz[initial] += @sz[new_entry]
     end
   end
+
+  def weighted?
+    true
+  end
 end
 
 # 5-8 2-4 7-9 7-8 6-0 1-4 0-4 0-3 4-9
