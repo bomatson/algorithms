@@ -1,4 +1,8 @@
+#!/usr/bin/env ruby
+
 class QuickFind
+  attr_reader :core_array
+
   def initialize
     @core_array = []
 
@@ -30,3 +34,16 @@ class QuickFind
     end
   end
 end
+
+# 9-6 6-1 5-8 2-0 3-1 5-2
+
+quick = QuickFind.new
+
+quick.union(9,6)
+quick.union(6,1)
+quick.union(5,8)
+quick.union(2,0)
+quick.union(3,1)
+quick.union(5,2)
+
+puts quick.core_array.inspect

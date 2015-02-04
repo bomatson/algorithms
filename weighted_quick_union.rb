@@ -35,18 +35,18 @@ class WeightedQuickUnion
   end
 end
 
-# 3-4 4-7 7-9 5-8 6-1 1-8 2-9 0-3 0-8
+# 5-8 2-4 7-9 7-8 6-0 1-4 0-4 0-3 4-9
 
 quick = WeightedQuickUnion.new 10
 
-quick.union(3,4)
-quick.union(4,7)
-quick.union(7,9)
 quick.union(5,8)
-quick.union(6,1)
-quick.union(1,8)
-quick.union(2,9)
+quick.union(2,4)
+quick.union(7,9)
+quick.union(7,8)
+quick.union(6,0)
+quick.union(1,4)
+quick.union(0,4)
 quick.union(0,3)
-quick.union(0,8)
+quick.union(4,9)
 
 puts quick.ids.inspect
