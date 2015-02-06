@@ -2,7 +2,7 @@ require 'rspec'
 require_relative 'weighted_quick_union'
 
 describe WeightedQuickUnion do
-  describe 'weighted?' do
+  xdescribe 'weighted?' do
     subject { WeightedQuickUnion.new 10 }
 
     context 'given an array with a cycle' do
