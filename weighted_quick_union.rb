@@ -53,4 +53,4 @@ quick.union(0,4)
 quick.union(0,3)
 quick.union(4,9)
 
-puts quick.ids.inspect
+# puts quick.ids.inspect
