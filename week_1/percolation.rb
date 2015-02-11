@@ -45,7 +45,7 @@ class Percolation
             @strategy.union(site_id, neighbor_site_id)
           end
 
-          if is_full?(neighbor[0] + 1, neighbor[1] + 1)
+          if is_full?(neighbor[0], neighbor[1])
             @strategy.union(@virtual_top, site_id)
           end
         end
@@ -64,14 +64,10 @@ class Percolation
   end
 
   def percolates?
-    @strategy.connected?(@virtual_top, @virtual_bottom)
-  end
-
-  def monte_carlo
-    @sites.shuffle.each do |site|
-      open(site[0], site[1])
-
-      break if percolates?
+    if @sites.count == 1
+      return is_full?(1,1)
     end
+
+    @strategy.connected?(@virtual_top, @virtual_bottom)
   end
 end
