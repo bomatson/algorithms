@@ -113,7 +113,7 @@ describe Deque do
       end
 
       it 'returns an iterator' do
-        expect(subject.iterator).to be_kind_of Enumerator
+        expect(subject.iterator).to be_kind_of Iterator
       end
 
       it 'walks through the queue from the front' do

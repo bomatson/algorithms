@@ -1,3 +1,5 @@
+require_relative 'iterator'
+
 class CoreDeque
   attr_reader :head, :tail, :node_count
 
@@ -60,13 +62,6 @@ class CoreDeque
   end
 
   def iterator
-    Enumerator.new do |yielder|
-      current_node = @head
-
-      while current_node.next != nil
-        yielder << current_node.item
-        current_node = current_node.next
-      end
-    end
+    @iterator ||= Iterator.new(@head)
   end
 end
