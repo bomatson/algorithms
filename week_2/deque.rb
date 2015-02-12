@@ -1,5 +1,3 @@
-require 'byebug'
-
 class Deque
   attr_reader :items
 

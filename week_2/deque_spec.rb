@@ -2,7 +2,7 @@ require 'rspec'
 require_relative 'deque'
 
 describe Deque do
-  let(:subject) { Deque.new }
+  subject { Deque.new }
 
   describe 'initialization' do
     it 'assigns items an empty array' do
