@@ -31,23 +31,13 @@ class RandomizedQueue
     @node_count
   end
 
+  def sample
+    shuffled_array[@node_count - 1].item
+  end
+
   def dequeue
-    array = []
-    current = @head
-
-    @node_count.times do |i|
-      array[i] = current
-      current = current.next
-    end
-
-    shuffle!(array)
-
-    @head = @tail = nil
-    @node_count = 0
-
-    array.each do |node|
-      enqueue(node.item)
-    end
+    shuffled_array
+    rethread_with(shuffled_array)
 
     item = @tail.item
     @tail = @tail.prev
@@ -56,7 +46,25 @@ class RandomizedQueue
     item
   end
 
-  def sample
+  def iterator
+    shuffled_array
+    rethread_with(shuffled_array)
+
+    @iterator ||= Iterator.new(@head)
+  end
+
+  private
+
+  def rethread_with(array)
+    @head = @tail = nil
+    @node_count = 0
+
+    array.each do |node|
+      enqueue(node.item)
+    end
+  end
+
+  def shuffled_array
     array = []
     current = @head
 
@@ -67,14 +75,8 @@ class RandomizedQueue
 
     shuffle!(array)
 
-    array.first.item
+    array
   end
-
-  def iterator
-    @iterator ||= Iterator.new(@head)
-  end
-
-  private
 
   def shuffle!(array)
     n = array.size

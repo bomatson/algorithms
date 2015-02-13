@@ -94,22 +94,23 @@ describe RandomizedQueue do
     end
   end
 
-  xdescribe '#iterator' do
+  describe '#iterator' do
     context 'given existing items' do
       before do
-        subject.add_first('hi there')
-        subject.add_first('helllloo there')
-        subject.add_last('magic stuff')
+        subject.enqueue('magic stuff')
+        subject.enqueue('fine i will be last')
+        subject.enqueue('me first')
+        subject.enqueue('blah')
+        subject.enqueue('blah blah')
       end
 
       it 'returns an iterator' do
         expect(subject.iterator).to be_kind_of Iterator
       end
 
-      it 'walks through the queue from the front to back' do
-        expect(subject.iterator.next).to eq 'helllloo there'
-        expect(subject.iterator.next).to eq 'hi there'
+      it 'walks through the queue in random order' do
         expect(subject.iterator.next).to eq 'magic stuff'
+        expect(subject.iterator.next).to eq 'fine i will be last'
       end
     end
   end
