@@ -6,10 +6,10 @@ class RandomizedQueue
 
   Node = Struct.new(:item, :prev, :next)
 
-  def initialize
+  def initialize(n = 0)
     @head = nil
     @tail = nil
-    @node_count = 0
+    @node_count = n
   end
 
   def enqueue(item)
