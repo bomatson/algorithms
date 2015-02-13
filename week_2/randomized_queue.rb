@@ -90,20 +90,4 @@ class RandomizedQueue
     array[i] = array[j]
     array[j] = swap
   end
-
-  # def shuffle
-  #   array = []
-  #   current_node = @head
-
-  #   while current_node.next != nil do
-  #     array[i
-  #   end
-  #     array[i] = current
-
-  #   array.shuffle!
-
-  #   array.each do
-
-  #   end
-  # end
 end
