@@ -19,7 +19,7 @@ describe RandomizedQueue do
       end
 
       it 'increments the count' do
-        expect(subject.tail).to eq 1
+        expect(subject.current).to eq 1
       end
     end
 
@@ -53,9 +53,9 @@ describe RandomizedQueue do
         expect(subject.dequeue).to eq 'hi there'
       end
 
-      it 'decrements the tail count' do
+      it 'decrements the current count' do
         subject.dequeue
-        expect(subject.tail).to eq 1
+        expect(subject.current).to eq 1
       end
     end
   end
@@ -110,12 +110,32 @@ describe RandomizedQueue do
 
       it 'keeps the item in the queue' do
         subject.sample
-        expect(subject.tail).to eq 2
+        expect(subject.current).to eq 2
       end
 
       it 'preserves the queue order' do
         subject.sample
         expect(subject.items).to eq ['hi there', 'bye there']
+      end
+    end
+  end
+
+  describe '#iterator' do
+    context 'given existing items' do
+      before do
+        subject.enqueue('hi there')
+        subject.enqueue('helllloo there')
+        subject.enqueue('magic stuff')
+      end
+
+      it 'returns an iterator' do
+        expect(subject.iterator).to be_kind_of RandomIterator
+      end
+
+      it 'walks through the queue in random order' do
+        expect(subject.iterator.next).to eq 'magic stuff'
+        expect(subject.iterator.next).to eq 'helllloo there'
+        expect(subject.iterator.next).to eq 'hi there'
       end
     end
   end
