@@ -15,14 +15,25 @@ describe MergeSort do
     end
   end
 
-  describe '#sort' do
+  xdescribe '#merge_sort' do
     context 'given an unsorted array' do
-      let(:actual) { [42, 28, 65, 49, 24, 43, 94, 33, 79, 57, 86, 56 ] }
+      let(:actual) { [42, 60, 59, 40, 75, 65, 57, 43, 30, 29, 10, 53] }
 
       it 'returns a sorted array' do
         p subject.merge_sort(actual)
         # expect(subject.actual).to eq [2,4,5,6,7,8,8,10]
       end
-   end
+    end
+  end
+
+  describe '#bottom_up' do
+    context 'given an unsorted array' do
+      let(:actual) { [17, 11, 68, 79, 36, 13, 33, 35, 99, 91] }
+
+      it 'returns a sorted array' do
+        p subject.bottom_up_merge_sort(actual)
+        # expect(subject.actual).to eq [2,4,5,6,7,8,8,10]
+      end
+    end
   end
 end
