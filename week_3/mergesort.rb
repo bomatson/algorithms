@@ -43,6 +43,7 @@ class MergeSort
     left = merge_sort array[0, array.size / 2]
     right = merge_sort array[array.size / 2, array.size]
 
+    # p left, right
     merging(left, right)
   end
 

@@ -17,12 +17,12 @@ describe MergeSort do
 
   describe '#sort' do
     context 'given an unsorted array' do
-      let(:actual) { [89, 10, 78, 31, 94, 63, 50, 35, 53, 15, 46, 44 ] }
+      let(:actual) { [42, 28, 65, 49, 24, 43, 94, 33, 79, 57, 86, 56 ] }
 
       it 'returns a sorted array' do
         p subject.merge_sort(actual)
         # expect(subject.actual).to eq [2,4,5,6,7,8,8,10]
       end
-    end
+   end
   end
 end
