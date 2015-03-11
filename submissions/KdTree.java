@@ -169,18 +169,16 @@ public class KdTree {
 
   private void intersection(Node node, RectHV rect, List<Point2D> points) {
 
-    if (node != null && rect.intersects(node.rect)) {
-      if (rect.contains(node.p)) {
-        points.add(node.p);
-      }
-
-      // only search subtrees if the rectangles intersect
-      // current bug: look into insert rectangles - all are overlapping?
-      /* if (!rect.intersects(rect)) return; */
-
-      if (node.lb != null) intersection(node.lb, rect, points);
-      if (node.rt != null) intersection(node.rt, rect, points);
+    if (rect.contains(node.p)) {
+      points.add(node.p);
     }
+
+    // only search subtrees if the rectangles intersect
+    // current bug: look into insert rectangles - all are overlapping?
+    /* if (!rect.intersects(rect)) return; */
+
+    if (node.lb != null) intersection(node.lb, rect, points);
+    if (node.rt != null) intersection(node.rt, rect, points);
   }
 
   public Point2D nearest(Point2D p) {
