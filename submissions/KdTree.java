@@ -39,12 +39,12 @@ public class KdTree {
   }
 
   public void insert(Point2D p) {
-    N++;
 
     if(isEmpty()) {
       RectHV rect = new RectHV(p.x(), 0, p.x(), 1);
       root = new Node(p, true, rect);
 
+      N++;
     } else if(!contains(p)) {
 
       Node parent = parent(root, p);
@@ -56,9 +56,14 @@ public class KdTree {
 
         if(parent.vert) {
           // less than parent, vertical, use x as max for rect
-          rect = new RectHV(0, p.y(), parentRect.xmin(), p.y());
+          /* StdOut.println("vertical, less than"); */
+          rect = new RectHV(parentRect.xmin(), p.y(), parentRect.xmax(), p.y());
         } else {
-          rect = new RectHV(p.x(), parentRect.xmin(), p.x(), parentRect.ymin());
+          /* StdOut.println("horiz parent, less than p"); */
+          /* StdOut.println("p: " + p); */
+          /* StdOut.println("parent: " + parent); */
+          /* StdOut.println("parentRect: " + parent.rect); */
+          rect = new RectHV(p.x(), parentRect.ymin(), p.x(), parentRect.ymax());
         }
 
         parent.lb = new Node(p, currentDirection, rect);
@@ -66,14 +71,17 @@ public class KdTree {
       } else {
 
         if(parent.vert) {
-          // less than parent, vertical, use x as max for rect
+          /* StdOut.println("vertical, greater than"); */
           rect = new RectHV(parentRect.xmin(), p.y(), 1, p.y());
         } else {
+          /* StdOut.println("horiz, greater than"); */
           rect = new RectHV(p.x(), parentRect.ymax(), p.x(), 1);
         }
 
         parent.rt = new Node(p, currentDirection, rect);
       }
+
+      N++;
     }
   }
 
@@ -130,7 +138,7 @@ public class KdTree {
     keepDrawingFrom(root);
   }
 
-  public void keepDrawingFrom(Node node) {
+  private void keepDrawingFrom(Node node) {
     if (node == null) return;
 
     StdDraw.setPenRadius(.02);
@@ -160,16 +168,19 @@ public class KdTree {
   }
 
   private void intersection(Node node, RectHV rect, List<Point2D> points) {
-    if (rect.contains(node.p)) {
-      points.add(node.p);
+
+    if (node != null && rect.intersects(node.rect)) {
+      if (rect.contains(node.p)) {
+        points.add(node.p);
+      }
+
+      // only search subtrees if the rectangles intersect
+      // current bug: look into insert rectangles - all are overlapping?
+      /* if (!rect.intersects(rect)) return; */
+
+      if (node.lb != null) intersection(node.lb, rect, points);
+      if (node.rt != null) intersection(node.rt, rect, points);
     }
-
-    // only search subtrees if the rectangles intersect
-    // current bug: look into insert rectangles - all are overlapping?
-    /* if (!rect.intersects(rect)) return; */
-
-    if (node.lb != null) intersection(node.lb, rect, points);
-    if (node.rt != null) intersection(node.rt, rect, points);
   }
 
   public Point2D nearest(Point2D p) {
@@ -199,6 +210,7 @@ public class KdTree {
   }
 
   public static void main(String[] args) {
+
     String filename = args[0];
     In in = new In(filename);
     StdDraw.show(0);
@@ -211,23 +223,23 @@ public class KdTree {
       kdtree.insert(p);
     }
 
-    /* Point2D p = new Point2D(0.7d, 0.2d); */
-    /* kdtree.insert(p); */
+    Point2D p = new Point2D(0.7d, 0.2d);
+    kdtree.insert(p);
 
-    /* Point2D np = new Point2D(0.5d, 0.4d); */
-    /* kdtree.insert(np); */
+    Point2D np = new Point2D(0.5d, 0.4d);
+    kdtree.insert(np);
 
-    /* Point2D ap = new Point2D(0.2d, 0.3d); */
-    /* kdtree.insert(ap); */
+    Point2D ap = new Point2D(0.2d, 0.3d);
+    kdtree.insert(ap);
 
-    /* Point2D mp = new Point2D(0.4d, 0.7d); */
-    /* kdtree.insert(mp); */
+    Point2D mp = new Point2D(0.4d, 0.7d);
+    kdtree.insert(mp);
 
-    /* Point2D gp = new Point2D(0.9d, 0.6d); */
-    /* kdtree.insert(gp); */
+    Point2D gp = new Point2D(0.9d, 0.6d);
+    kdtree.insert(gp);
 
-    /* Point2D bp = new Point2D(0.2d, 0.8d); */
-    /* kdtree.insert(bp); */
+    Point2D bp = new Point2D(0.2d, 0.8d);
+    kdtree.insert(bp);
     // draw the points
     StdDraw.clear();
     StdDraw.setPenColor(StdDraw.BLACK);
@@ -235,7 +247,7 @@ public class KdTree {
     kdtree.draw();
 
     StdDraw.show(40);
-    while(true) {}
+    /* while(true) {} */
   }
 }
 
